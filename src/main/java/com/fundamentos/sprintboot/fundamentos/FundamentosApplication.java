@@ -32,6 +32,9 @@ public class FundamentosApplication implements CommandLineRunner {
 	private Log LOGGER = LogFactory.getLog(FundamentosApplication.class);
 
 	private ComponentDependency componentDependency;
+
+	private ComponentImplement componentImplement;
+
 	private MyBean myBean;
 	private MyBeanWithDependency myBeanWithDependency;
 	private MyBeanCar myBeanCar;
@@ -42,7 +45,8 @@ public class FundamentosApplication implements CommandLineRunner {
 	private UserService userService;
 
 	@Autowired
-	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependency componentDependency,
+	public FundamentosApplication(ComponentImplement componentImplement,
+								  @Qualifier("componentTwoImplement") ComponentDependency componentDependency,
 								  MyBean myBean,
 								  MyBeanWithDependency myBeanWithDependency,
 								  MyBeanCar myBeanCar,
@@ -50,6 +54,7 @@ public class FundamentosApplication implements CommandLineRunner {
 								  UserPojo userPojo,
 								  UserRepository userRepository) {
 
+		this.componentImplement = componentImplement;
 		this.componentDependency = componentDependency;
 		this.myBean = myBean;
 		this.myBeanWithDependency = myBeanWithDependency;
@@ -65,10 +70,12 @@ public class FundamentosApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		myBean.print();
+		componentImplement.saludar();
 		//ejemplosAnteriores();
 		//saveUsersInDatabase();
 		//getInformationJpqlFromUser("daniela@domain.com");
-		saveWithErrorTransactional();
+		//saveWithErrorTransactional();
 	}
 
 	private void getInformationJpqlFromUser(String email){
